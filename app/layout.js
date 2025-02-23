@@ -17,3 +17,4 @@ export default function RootLayout({ children }) {
     </I18nextProvider>
   );
 }
+
