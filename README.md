@@ -5,6 +5,9 @@
 
 #### **Organize. Plan. Collaborate. All in One Place!**  
 
+<img src="https://github.com/user-attachments/assets/e2f6d97b-9fe3-4e10-ac02-16a9a1b5896b" width="100%">
+
+
 </div>
 
 ## 🌟 About NoTiFy  
@@ -30,6 +33,11 @@ This project was developed for the **FOSS Hackathon** by a team of **passionate 
 - 🤝 **Workspace Collaboration** - Work together in real-time.  
 - 📶 **Offline Support** - Access your data anytime, anywhere.  
 
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/c94e30a9-a5ac-493f-abc0-83e7818c766f" width="48%" >
+  <img src="https://github.com/user-attachments/assets/08280c88-472f-47fd-892b-f00430a0fd51" width="48%" >
+</div>
+
 ## 🚨 Upcoming Features  
 We are actively working on new features to enhance NoTiFy. In the upcoming months, we will be rolling out:  
 - 📱 **Mobile App** - Access NoTiFy on your smartphone.  
@@ -39,20 +47,12 @@ We are actively working on new features to enhance NoTiFy. In the upcoming month
 
 Stay tuned for these exciting updates! 🚀  
 
-## 🖼 Look of Our Web Application  
-Here’s a glimpse of how NoTiFy looks in action:  
-
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/661e15d7-08ad-4d78-b4b8-162eab310679" width="320" >
-  <img src="https://github.com/user-attachments/assets/6f88559e-688c-423b-beef-183add0e90e1" width="320" >
-  <img src="https://github.com/user-attachments/assets/2853484b-3a59-4767-9df6-9aacc21bc331" width="320" >
-  <br>
-  <img src="https://github.com/user-attachments/assets/bbdc89cd-9614-4dae-a1ea-bacf720963fa" width="320" >
-  <img src="https://github.com/user-attachments/assets/ee2f6297-2a01-4060-9f70-3c5398ccb5bf" width="320" >
-  <img src="https://github.com/user-attachments/assets/8bd4ecb4-f183-4169-bdeb-757f025c5eb6" width="320" >
+  <img src="https://github.com/user-attachments/assets/0ea0a88f-b22b-4b4e-9067-a34a2f29a084" width="48%" height="250px">
+  <img src="https://github.com/user-attachments/assets/9b555299-5cbf-407b-8d77-5fe2fef24172" width="48%" height="250px">
 </div>
 
-## 🛠️ Tech Stack  
+## 🛠️ Tech Stack 
 
 ### **Frontend**  
 - **Next.js (App Router)**  
