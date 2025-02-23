@@ -2,20 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Hide scrollbar but allow scrolling */
+html {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-y: auto; /* Enables scrolling only when needed */
+}
+
+/* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Custom Font with Optimized Loading */
+@font-face {
+  font-family: 'FuturaCondensedLight';
+  src: url('/fonts/Futura-CondensedLight.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Ensure Fallback Fonts for Better Rendering */
+body {
+  font-family: 'FuturaCondensedLight', Arial, sans-serif,;
 }
