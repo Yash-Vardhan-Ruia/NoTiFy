@@ -40,9 +40,6 @@ const Login = () => {
       console.log("Initiating GitHub sign in from Login Page");
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "github",
-        options: {
-          redirectTo: "/auth/callback",
-        },
       });
 
       if (error) throw error;

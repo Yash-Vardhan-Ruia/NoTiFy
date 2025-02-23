@@ -1,6 +1,5 @@
 "use client";
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   DndContext,
   useSensor,
@@ -92,6 +91,21 @@ export function MealPlanner() {
   const [data, setData] = useState(initialData);
   const [newMeal, setNewMeal] = useState("");
   const [activeId, setActiveId] = useState(null);
+  
+  // Replace this with your actual user id retrieval
+  const userId = "some_user_id"; 
+  
+  // Load previous meal plan on mount
+  useEffect(() => {
+    async function fetchMealPlan() {
+      const res = await fetch(`/api/mealplanner?userId=${userId}`);
+      const json = await res.json();
+      if (json.mealPlan && json.mealPlan.plan_data) {
+        setData(json.mealPlan.plan_data);
+      }
+    }
+    if(userId) fetchMealPlan();
+  }, [userId]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -203,9 +217,18 @@ export function MealPlanner() {
     }));
   };
 
-  const saveMealPlan = () => {
-    alert("Meal plan saved!");
-    // Add your save logic here
+  const saveMealPlan = async () => {
+    const res = await fetch("/api/mealplanner", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ user_id: userId, mealPlan: data }),
+    });
+    const json = await res.json();
+    if (json.mealPlan) {
+      alert("Meal plan saved!");
+    } else {
+      alert("Error saving meal plan.");
+    }
   };
 
   return (

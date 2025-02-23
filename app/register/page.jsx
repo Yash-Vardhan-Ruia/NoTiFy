@@ -64,9 +64,6 @@ const Register = () => {
       console.log("Initiating GitHub sign in from Register Page");
       const { error } = await supabase.auth.signInWithOAuth({
         provider: "github",
-        options: {
-          redirectTo: "/auth/callback",
-        },
       });
       if (error) throw error;
     } catch (err) {

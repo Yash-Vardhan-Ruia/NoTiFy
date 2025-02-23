@@ -46,52 +46,65 @@ export const Sidebar = ({
   );
 };
 
-export const SidebarBody = (props) => {
+export const SidebarBody = ({ profile, className, children, ...props }) => {
   return (
     <>
-      <DesktopSidebar {...props} />
-      <MobileSidebar {...props} />
+      <DesktopSidebar profile={profile} {...props} />
+      <MobileSidebar profile={profile} {...props} />
     </>
   );
 };
 
-export const DesktopSidebar = ({
-  className,
-  children,
-  ...props
-}) => {
+export const DesktopSidebar = ({ profile, className, children, ...props }) => {
   const { open, setOpen, animate } = useSidebar();
   return (
     <motion.div
       className={cn(
-        "h-full px-4 py-4 hidden md:flex md:flex-col w-[200px] flex-shrink-0", // Increased default width to 200px
-        "bg-[#2C1A47]", // Set the background color to purple
+        "h-full px-4 py-4 hidden md:flex md:flex-col w-[200px] flex-shrink-0",
+        "bg-[#2C1A47]",
         className
       )}
       animate={{
-        width: animate ? (open ? "300px" : "75px") : "300px", // Keep it at 200px by default and expand to 400px when hovered
+        width: animate ? (open ? "300px" : "75px") : "300px",
       }}
-      transition={{ duration: 0.3 }} // Smooth transition for width change
-      onMouseEnter={() => setOpen(true)} // Increase width on hover
-      onMouseLeave={() => setOpen(false)} // Return to 200px when hover ends
+      transition={{ duration: 0.3 }}
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
       {...props}
     >
-      {children}
+      {open ? <Logo /> : <LogoIcon />}
+      <div className="mt-8 flex flex-col gap-2">
+        {children}
+      </div>
+      {/* Display profile info at bottom if provided */}
+      {profile && (
+        <SidebarLink
+          link={{
+            label: profile.name,
+            href: "#",
+            icon: (
+              <Image
+                src={profile.avatar_url || "/default-avatar.png"}
+                className="h-10 w-10 flex-shrink-0 rounded-full"
+                width={40}
+                height={40}
+                alt={profile.name}
+              />
+            ),
+          }}
+        />
+      )}
     </motion.div>
   );
 };
 
-export const MobileSidebar = ({
-  className,
-  children,
-  ...props
-}) => {
+export const MobileSidebar = ({ profile, className, children, ...props }) => {
   const { open, setOpen } = useSidebar();
   return (
     <div
       className={cn(
         "h-10 px-4 py-4 flex flex-row md:hidden items-center justify-between w-full",
-        "bg-[#2C1A47]", // Set the background color to purple
+        "bg-[#2C1A47]",
         className
       )}
       {...props}
@@ -124,6 +137,23 @@ export const MobileSidebar = ({
               <IconX />
             </div>
             {children}
+            {profile && (
+              <SidebarLink
+                link={{
+                  label: profile.name,
+                  href: "#",
+                  icon: (
+                    <Image
+                      src={profile.avatar_url || "/default-avatar.png"}
+                      className="h-10 w-10 flex-shrink-0 rounded-full"
+                      width={40}
+                      height={40}
+                      alt={profile.name}
+                    />
+                  ),
+                }}
+              />
+            )}
           </motion.div>
         )}
       </AnimatePresence>

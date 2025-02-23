@@ -1,15 +1,10 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { Plus, Trash2, Edit, ListChecks, ClipboardList, Loader2, CheckSquare, FilePlus, Save } from "lucide-react";
 import { DndProvider, useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 const ItemType = "TASK";
-
-const initialTasks = {
-  todo: [],
-  doing: [{ id: "1", content: "📞 Call mom" }],
-  done: [],
-};
 
 // Task Item Component (Draggable)
 const TaskItem = ({ task, column, removeTask, renameTask }) => {
@@ -98,9 +93,18 @@ const Column = ({ title, column, tasks, moveTask, removeTask, renameTask }) => {
 };
 
 // Task Manager Component
-const TaskManager = () => {
-  const [tasks, setTasks] = useState(initialTasks);
+const TaskManager = ({ userId }) => {
+  const [tasks, setTasks] = useState({ todo: [], doing: [], done: [] });
   const [newTask, setNewTask] = useState("");
+
+  useEffect(() => {
+    async function fetchTasks() {
+      const res = await fetch(`/api/tasks?userId=${userId}`);
+      const json = await res.json();
+      setTasks(json.tasks);
+    }
+    if (userId) fetchTasks();
+  }, [userId]);
 
   // Move Task Between Columns
   const moveTask = (taskId, fromColumn, toColumn) => {
@@ -145,6 +149,32 @@ const TaskManager = () => {
     }));
   };
 
+  // Save tasks by posting each task if not already saved.
+  const handleSaveTasks = async () => {
+    try {
+      // Loop over each column and each task, POSTing them to save.
+      for (const column of Object.keys(tasks)) {
+        for (const task of tasks[column]) {
+          // Optionally, check if the task was already saved.
+          // In this example, we simply re-save all tasks.
+          const res = await fetch("/api/tasks", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: userId, task: task.content }),
+          });
+          const json = await res.json();
+          if (json.error) {
+            console.error("Error saving task:", json.error);
+          }
+        }
+      }
+      alert("Tasks saved!");
+    } catch (err) {
+      console.error("Save error:", err);
+      alert("Error saving tasks.");
+    }
+  };
+
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="bg-[#2C1A47] min-h-screen p-10 flex flex-col items-center">
@@ -173,7 +203,9 @@ const TaskManager = () => {
             <Plus size={20} className="text-white" />
             New Task
           </button>
+          {/* Added Save button with save handler */}
           <button
+            onClick={handleSaveTasks}
             className="bg-purple-500 text-white px-5 py-3 rounded-md flex items-center gap-2 transition duration-300 hover:bg-purple-700 transform hover:scale-105 ml-4"
           >
             <Save size={20} className="text-white" />
